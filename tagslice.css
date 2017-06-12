@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
+
 :root {
 	/* Highly approximate color names from our pallette */
 	--orange: rgb(255,153,0);
@@ -14,18 +16,36 @@ outer {
 	height: 100%;
 
 	background-color: var(--white);
+	font-family: 'Roboto';
 
 	flex-direction: row;
 }
 
 taglist {
-	display: block;
-
-	padding: 5px;
+	display: flex;
 
 	border-right: 2px solid var(--orange);
 
 	flex-shrink: 0;
+
+	flex-direction: column;
+}
+
+tagsection {
+	display: flex;
+
+	padding: 5px;
+
+	border-bottom: 1px solid var(--orange);
+
+	flex-direction: column
+}
+
+tagsectiontitle {
+	display: block;
+
+	color: var(--blue);
+	font-weight: 500;
 }
 
 objectlist {

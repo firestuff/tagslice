@@ -6,16 +6,37 @@ class TagSlice {
 		this.loadJson_();
 	}
 
+	createElement_(container, tagName, text) {
+		let elem = document.createElement(tagName);
+		container.appendChild(elem);
+		if (text) {
+			elem.innerText = text;
+		}
+		return elem;
+	}
+
 	buildDom_(container) {
-		let outer = document.createElement('outer');
-		container.appendChild(outer);
+		let outer = this.createElement_(container, 'outer');
+		this.buildTagList_(outer);
+		this.buildObjectList_(outer);
+	}
 
-		let taglist = document.createElement('taglist');
-		outer.appendChild(taglist);
-		taglist.innerText = 'tag!';
+	buildTagList_(container) {
+		let taglist = this.createElement_(container, 'taglist');
+		this.tagInclude_ = this.buildTagSection_(taglist, 'Include');
+		this.tagExclude_ = this.buildTagSection_(taglist, 'Exclude');
+		this.tagSortAsc_ = this.buildTagSection_(taglist, 'Sort (ascending)')
+		this.tagSortDesc_ = this.buildTagSection_(taglist, 'Sort (descending)')
+	}
 
+	buildTagSection_(container, title) {
+		let tagsection = this.createElement_(container, 'tagsection');
+		let tagsectiontitle = this.createElement_(tagsection, 'tagsectiontitle', title);
+	}
+
+	buildObjectList_(container) {
 		let objectlist = document.createElement('objectlist');
-		outer.appendChild(objectlist);
+		container.appendChild(objectlist);
 	}
 
 	loadJson_() {
