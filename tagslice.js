@@ -23,20 +23,25 @@ class TagSlice {
 
 	buildTagList_(container) {
 		let taglist = this.createElement_(container, 'taglist');
-		this.tagInclude_ = this.buildTagSection_(taglist, 'Include');
-		this.tagExclude_ = this.buildTagSection_(taglist, 'Exclude');
-		this.tagSortAsc_ = this.buildTagSection_(taglist, 'Sort (ascending)')
-		this.tagSortDesc_ = this.buildTagSection_(taglist, 'Sort (descending)')
+		this.tagInclude_ = this.buildTagSection_(taglist, 'include');
+		this.tagExclude_ = this.buildTagSection_(taglist, 'exclude');
+		this.tagSortAsc_ = this.buildTagSection_(taglist, 'sort ⇣')
+		this.tagSortDesc_ = this.buildTagSection_(taglist, 'sort ⇡')
 	}
 
 	buildTagSection_(container, title) {
 		let tagsection = this.createElement_(container, 'tagsection');
-		let tagsectiontitle = this.createElement_(tagsection, 'tagsectiontitle', title);
+		this.buildTag_(tagsection, title).classList.add('placeholder');
+		return tagsection;
 	}
 
 	buildObjectList_(container) {
 		let objectlist = document.createElement('objectlist');
 		container.appendChild(objectlist);
+	}
+
+	buildTag_(container, name) {
+		return this.createElement_(container, 'tag', name);
 	}
 
 	loadJson_() {

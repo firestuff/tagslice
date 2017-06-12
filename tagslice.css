@@ -1,11 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 :root {
 	/* Highly approximate color names from our pallette */
 	--orange: rgb(255,153,0);
 	--black: rgb(66,66,66);
-	--white: rgb(233,233,233);
-	--grey: rgb(188,188,188);
+	--white: rgb(255,255,255);
+	--lightgrey: rgb(233,233,233);
+	--darkgrey: rgb(188,188,188);
 	--blue: rgb(50,153,187);
 }
 
@@ -38,14 +39,29 @@ tagsection {
 
 	border-bottom: 1px solid var(--orange);
 
-	flex-direction: column
+	flex-direction: column;
 }
 
-tagsectiontitle {
+tag {
 	display: block;
 
+	padding: 3px;
+
+	border: 1px solid var(--darkgrey);
+	border-radius: 8px;
+
+	background-color: var(--lightgrey);
 	color: var(--blue);
-	font-weight: 500;
+	font-family: 'Roboto';
+	font-size: small;
+	text-align: center;
+
+	cursor: move;
+	user-select: none;
+}
+
+tag.placeholder {
+	opacity: 0.7;
 }
 
 objectlist {
