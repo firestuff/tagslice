@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400');
 
 :root {
 	/* Highly approximate color names from our pallette */
@@ -79,7 +79,7 @@ cardSection {
 }
 
 cardSectionTitle {
-	font-weight: 500;
+	opacity: 0.5;
 }
 
 cardSectionText {
