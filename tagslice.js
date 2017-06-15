@@ -3,10 +3,25 @@
 class TagSlice {
 	constructor(container) {
 		this.buildDom_(container);
-		addEventListener('hashchange', () => this.parseHash_());
-		this.parseHash_();
+		addEventListener('hashchange', () => this.parseUrl_());
+		this.parseUrl_();
 		this.loadJson_();
+    this.registerKeys_();
 	}
+
+  registerKeys_() {
+		document.addEventListener('keypress', (e) => {
+      switch (e.key) {
+        case 'r':
+          this.loadJson_();
+          break;
+
+        case 'x':
+				  this.tagList_.classList.toggle('expandAll');
+          break;
+			}
+		});
+  }
 
 	createElement_(container, tagName, text) {
 		let elem = document.createElement(tagName);
@@ -32,17 +47,35 @@ class TagSlice {
 		let detail = this.createElement_(elem, 'cardDetail');
 		for (let sectionName in object['content']) {
 			let section = this.createElement_(detail, 'cardSection');
-			this.createElement_(section, 'cardSectionTitle', sectionName);
+      if (sectionName) {
+			  this.createElement_(section, 'cardSectionTitle', sectionName);
+      }
 			this.createElement_(section, 'cardSectionText', object['content'][sectionName]);
 		}
+    if (object['references']) {
+      let refList = this.createElement_(detail, 'referenceList');
+      for (let refName in object['references']) {
+        let ref = this.createElement_(refList, 'a', refName);
+        ref.href = object['references'][refName];
+      }
+    }
 	}
 
-	parseHash_() {
+	parseUrl_() {
 		this.tags_ = [];
 		let hash = window.location.hash.substr(1);
-		for (let tag of hash.split(',')) {
-			this.tags_.push(decodeURIComponent(tag));
-		}
+    if (hash) {
+		  for (let tag of hash.split(',')) {
+			  this.tags_.push(decodeURIComponent(tag));
+		  }
+    }
+    let query = window.location.href.split('?', 2)[1];
+    if (query) {
+      query = query.split('#', 1)[0];
+      for (let tag of query.split(',')) {
+			  this.tags_.push(decodeURIComponent(tag));
+      }
+    }
 		document.title = this.tags_.join(', ');
 		this.maybeRender_();
 	}
