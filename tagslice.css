@@ -1,73 +1,73 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400');
 
 :root {
 	/* Highly approximate color names from our pallette */
-	--orange: rgb(255,153,0);
-	--black: rgb(66,66,66);
 	--white: rgb(255,255,255);
-	--lightgrey: rgb(233,233,233);
-	--darkgrey: rgb(188,188,188);
-	--blue: rgb(50,153,187);
+	--lightgrey: rgb(238,238,238);
+	--darkgrey: rgb(81,81,81);
+	--blue: rgb(0,180,255);
 }
 
-outer {
+tagList {
 	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow: scroll;
 
 	width: 100%;
 	height: 100%;
 
 	background-color: var(--white);
 	font-family: 'Roboto';
-
-	flex-direction: row;
-}
-
-taglist {
-	display: flex;
-
-	border-right: 2px solid var(--orange);
-
-	flex-shrink: 0;
-
-	flex-direction: column;
-}
-
-tagsection {
-	display: flex;
-
-	padding: 5px;
-
-	border-bottom: 1px solid var(--orange);
-
-	flex-direction: column;
 }
 
 tag {
+	display: flex;
+	flex-direction: column;
+
+	flex-shrink: 0;
+	width: 100%;
+	max-width: 50rem;
+
+	margin-bottom: 2rem;
+}
+
+tagName {
 	display: block;
 
-	padding: 3px;
+	color: var(--darkgrey);
+	font-size: x-large;
 
-	border: 1px solid var(--darkgrey);
-	border-radius: 8px;
+	margin-bottom: 0.5rem;
+}
 
-	background-color: var(--lightgrey);
+card {
+	display: flex;
+	flex-direction: column;
+
+	border: 1px solid var(--lightgrey);
+	border-radius: 0.25rem;
+	padding: 0.75rem;
+	margin: 0.5rem;
+}
+
+cardTitle {
 	color: var(--blue);
-	font-family: 'Roboto';
-	font-size: small;
-	text-align: center;
-
-	cursor: move;
-	user-select: none;
+	font-size: large;
+	cursor: pointer;
 }
 
-tag.placeholder {
-	opacity: 0.7;
+cardTitle::selection {
+	background: transparent;
 }
 
-objectlist {
+cardText {
+	display: none;
+
+	color: var(--darkgrey);
+	margin-top: 0.5rem;
+}
+
+card.expanded cardText {
 	display: block;
-
-	padding: 5px;
-
-	flex-grow: 1;
 }

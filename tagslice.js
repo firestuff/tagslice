@@ -3,6 +3,8 @@
 class TagSlice {
 	constructor(container) {
 		this.buildDom_(container);
+		addEventListener('hashchange', () => this.parseHash_());
+		this.parseHash_();
 		this.loadJson_();
 	}
 
@@ -15,33 +17,33 @@ class TagSlice {
 		return elem;
 	}
 
+	createTag_(container, tagName) {
+		let elem = this.createElement_(container, 'tag');
+		this.createElement_(elem, 'tagName', tagName);
+		return elem;
+	}
+
+	createCard_(container, object) {
+		let elem = this.createElement_(container, 'card');
+		let title = this.createElement_(elem, 'cardTitle', object['title']);
+		title.addEventListener('click', () => {
+			elem.classList.toggle('expanded');
+		});
+		this.createElement_(elem, 'cardText', object['description']);
+	}
+
+	parseHash_() {
+		this.tags_ = [];
+		let hash = window.location.hash.substr(1);
+		for (let tag of hash.split(',')) {
+			this.tags_.push(decodeURIComponent(tag));
+		}
+		document.title = this.tags_.join(', ');
+		this.maybeRender_();
+	}
+
 	buildDom_(container) {
-		let outer = this.createElement_(container, 'outer');
-		this.buildTagList_(outer);
-		this.buildObjectList_(outer);
-	}
-
-	buildTagList_(container) {
-		let taglist = this.createElement_(container, 'taglist');
-		this.tagInclude_ = this.buildTagSection_(taglist, 'include');
-		this.tagExclude_ = this.buildTagSection_(taglist, 'exclude');
-		this.tagSortAsc_ = this.buildTagSection_(taglist, 'sort ⇣')
-		this.tagSortDesc_ = this.buildTagSection_(taglist, 'sort ⇡')
-	}
-
-	buildTagSection_(container, title) {
-		let tagsection = this.createElement_(container, 'tagsection');
-		this.buildTag_(tagsection, title).classList.add('placeholder');
-		return tagsection;
-	}
-
-	buildObjectList_(container) {
-		let objectlist = document.createElement('objectlist');
-		container.appendChild(objectlist);
-	}
-
-	buildTag_(container, name) {
-		return this.createElement_(container, 'tag', name);
+		this.tagList_ = this.createElement_(container, 'tagList');
 	}
 
 	loadJson_() {
@@ -55,6 +57,22 @@ class TagSlice {
 	}
 
 	onJsonLoad_(response) {
-		console.log('foo', response);
+		this.objects_ = response;
+		this.maybeRender_();
+	}
+
+	maybeRender_() {
+		if (!this.tags_ || !this.objects_) {
+			return;
+		}
+		this.tagList_.innerHTML = '';
+		for (let tag of this.tags_) {
+			let elem = this.createTag_(this.tagList_, tag);
+			for (let object of this.objects_) {
+				if (object['tags'].includes(tag)) {
+					this.createCard_(elem, object);
+				}
+			}
+		}
 	}
 }
