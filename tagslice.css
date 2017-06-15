@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,600');
 
 :root {
 	/* Highly approximate color names from our pallette */
@@ -18,6 +18,7 @@ tagList {
 	height: 100%;
 
 	background-color: var(--white);
+	color: var(--darkgrey);
 	font-family: 'Roboto';
 }
 
@@ -61,13 +62,26 @@ cardTitle::selection {
 	background: transparent;
 }
 
-cardText {
+cardDetail {
 	display: none;
-
-	color: var(--darkgrey);
-	margin-top: 0.5rem;
+	flex-direction: column;
 }
 
-card.expanded cardText {
-	display: block;
+card.expanded cardDetail {
+	display: flex;
+}
+
+cardSection {
+	display: flex;
+	flex-direction: column;
+
+	margin-top: 1rem;
+}
+
+cardSectionTitle {
+	font-weight: 600;
+}
+
+cardSectionText {
+	margin-top: 0.2rem;
 }

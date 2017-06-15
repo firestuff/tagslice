@@ -29,7 +29,12 @@ class TagSlice {
 		title.addEventListener('click', () => {
 			elem.classList.toggle('expanded');
 		});
-		this.createElement_(elem, 'cardText', object['description']);
+		let detail = this.createElement_(elem, 'cardDetail');
+		for (let sectionName in object['content']) {
+			let section = this.createElement_(detail, 'cardSection');
+			this.createElement_(section, 'cardSectionTitle', sectionName);
+			this.createElement_(section, 'cardSectionText', object['content'][sectionName]);
+		}
 	}
 
 	parseHash_() {
